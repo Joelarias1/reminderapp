@@ -8,13 +8,21 @@ import androidx.annotation.Nullable;
 
 public class AdminBD extends SQLiteOpenHelper {
 
-    public AdminBD (@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NOMBRE = "bdapp.db";
+    private static final String TABLE_USUARIOS = "t_usuarios";
+
+    public AdminBD(registrarActividad registrarActividad, String dbPrueba, @Nullable Context context, int i) {
+        super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table usuarios (rut text primary key, nombre text, contrasena text, token text)");
+        db.execSQL("CREATE TABLE" + TABLE_USUARIOS + "(" +
+                "RUT TEXT PRIMARY KEY," +
+                "NOMBRE TEXT NOT NULL," +
+                "CONTRASENA TEXT NOT NULL," +
+                "TOKEN INTEGER NOT NULL )");
     }
 
     @Override
