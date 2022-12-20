@@ -3,13 +3,13 @@ package com.example.androidpruebatres;
 public class Usuario {
     private String nombre;
     private String rut;
-    private String contra;
+    private String contrasena;
     private String token;
 
-    public Usuario(String nombre, String rut, String contra, String token) {
+    public Usuario(String nombre, String rut, String contrasena, String token) {
         this.nombre = nombre;
         this.rut = rut;
-        this.contra = contra;
+        this.contrasena = contrasena;
         this.token = token;
     }
 
@@ -30,7 +30,7 @@ public class Usuario {
     }
 
     public String getContra() {
-        return contra;
+        return contrasena;
     }
 
     public void setToken(String token) {

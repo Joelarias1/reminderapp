@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 public class registrarActividad extends AppCompatActivity {
     private TextInputLayout tilRut, tilNombre, tilContra, tilToken;
     private Button btnNuevoUser;
-    private ArrayList<Usuario> losUsuarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,40 +24,43 @@ public class registrarActividad extends AppCompatActivity {
 
         referencias();
         eventos();
+        poblar();
+
 
     }
+
+    private void poblar(){
+        AdminBD DB = new AdminBD(registrarActividad.this);
+        DB.crearUser("2000", "joel", "3234","234235");
+        DB.crearUser("2001240", "joel", "3234","234235");
+        DB.crearUser("2001230", "joel", "3234","234235");
+        DB.crearUser("20231200", "joel", "3234","234235");
+    }
+
 
     private void guardarUser(){
-        String rut = tilRut.getEditText().getText().toString();
-        String nombre = tilNombre.getEditText().getText().toString();
-        String contrasena = tilContra.getEditText().getText().toString();
-        String token = tilToken.getEditText().getText().toString();
+        String rut, nombre, contrasena, token;
 
-        Usuario usr = new Usuario(rut, nombre, contrasena, token);
-        losUsuarios.add(usr);
+        rut = tilRut.getEditText().getText().toString();
+        nombre = tilNombre.getEditText().getText().toString();
+        contrasena = tilContra.getEditText().getText().toString();
+        token = tilToken.getEditText().getText().toString();
 
-        grabarBD(usr);
+        AdminBD DB = new AdminBD(registrarActividad.this);
 
-    }
 
-    private void grabarBD(Usuario user){
-        try{
-            AdminBD adbd = new AdminBD(this,"BDAplicacion", null, 1);
-            SQLiteDatabase miBD = adbd.getWritableDatabase();
+        Boolean checkData = DB.crearUser("2000", "joel", "3234","234235");
 
-            ContentValues registro = new ContentValues();
-            registro.put("rut", user.getRut());
-            registro.put("nombre", user.getNombre());
-            registro.put("contrasena", user.getContra());
-            registro.put("token", user.getToken());
-
-            miBD.insert("Usuario", null, registro);
-            miBD.close();
-
-        }catch (Exception ex){
-
+        if (checkData== true){
+            Toast.makeText(this, "User creado exitosamente", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, "Fallido", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
+
 
 
     private void eventos(){
