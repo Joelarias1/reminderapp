@@ -39,6 +39,7 @@ public class registrarActividad extends AppCompatActivity {
 
 
     private void guardarUser(){
+        AdminBD DB = new AdminBD(registrarActividad.this);
         String rut, nombre, contrasena, token;
 
         rut = tilRut.getEditText().getText().toString();
@@ -46,15 +47,12 @@ public class registrarActividad extends AppCompatActivity {
         contrasena = tilContra.getEditText().getText().toString();
         token = tilToken.getEditText().getText().toString();
 
-        AdminBD DB = new AdminBD(registrarActividad.this);
-
-
-        Boolean checkData = DB.crearUser("2000", "joel", "3234","234235");
+        Boolean checkData = DB.crearUser(rut, nombre, contrasena, token);
 
         if (checkData== true){
             Toast.makeText(this, "User creado exitosamente", Toast.LENGTH_SHORT).show();
         }else {
-            Toast.makeText(this, "Fallido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Fallido revisar datos", Toast.LENGTH_SHORT).show();
         }
     }
 
