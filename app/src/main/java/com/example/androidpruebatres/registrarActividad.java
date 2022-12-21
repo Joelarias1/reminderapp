@@ -2,19 +2,14 @@ package com.example.androidpruebatres;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import android.database.Cursor;
 
 
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.util.ArrayList;
 
 public class registrarActividad extends AppCompatActivity {
     private TextInputLayout tilRut, tilNombre, tilContra, tilToken;
@@ -28,8 +23,6 @@ public class registrarActividad extends AppCompatActivity {
         referencias();
         eventos();
         poblar();
-
-
     }
 
     private void poblar(){
@@ -94,10 +87,10 @@ public class registrarActividad extends AppCompatActivity {
     }
 
     private void referencias(){
-        tilToken = findViewById(R.id.tilToken);
         tilNombre = findViewById(R.id.tilNombre);
         tilContra = findViewById(R.id.tilContra);
         tilRut = findViewById(R.id.tilRut);
+        tilToken = findViewById(R.id.tilToken);
 
         btnNuevoUser = findViewById(R.id.btnNuevouser);
     }

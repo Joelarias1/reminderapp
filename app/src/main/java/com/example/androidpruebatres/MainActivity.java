@@ -29,13 +29,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void registrarAct(){
-        Intent registrarAct = new Intent(this, registrarActividad.class);
-        startActivity(registrarAct);
-    }
-
-
-
     private void userValidado(){
         AdminBD DB = new AdminBD(MainActivity.this);
         String rut, contra;
@@ -80,6 +73,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void registrarAct(){
+        Intent registrarAct = new Intent(this, registrarActividad.class);
+        startActivity(registrarAct);
+    }
+
+    private void recuperarAct(){
+        Intent recuperarAct = new Intent(this, recuperarpass.class);
+        startActivity(recuperarAct);
+    }
+
 
     private void eventos(){
         btnIngresar.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +96,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registrarAct();
+            }
+        });
+
+        btnRecuperar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recuperarAct();
             }
         });
     }

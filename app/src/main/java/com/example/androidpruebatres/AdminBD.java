@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 
 public class AdminBD extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
-    private static final String DATABASE_NOMBRE = "BDDD.db";
+    private static final int DATABASE_VERSION = 3;
+    private static final String DATABASE_NOMBRE = "BDUser.db";
 
     public AdminBD(@Nullable Context context) {
         super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
@@ -42,11 +42,6 @@ public class AdminBD extends SQLiteOpenHelper {
             //Inserto el dato
         }
     }
-
-
-
-
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
