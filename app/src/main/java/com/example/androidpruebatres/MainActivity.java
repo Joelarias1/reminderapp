@@ -66,11 +66,13 @@ public class MainActivity extends AppCompatActivity {
             if (contrasenaCorrecta == true) {
                 // Iniciar sesión
                 Toast.makeText(this, "La contraseña es correcta", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, recordatorios.class);
-                intent.putExtra("RUT", rut);
-                intent.putExtra("CONTRASEÑA", contra);
+                Intent actividadRecordatorio = new Intent(this, recordatorios.class);
 
-                startActivity(intent);
+                actividadRecordatorio.putExtra("RUT", rut);
+                actividadRecordatorio.putExtra("CONTRASENA", contra);
+
+
+                startActivity(actividadRecordatorio);
 
             } else {
                 tilContra.setError("Contraseña incorrecta");
