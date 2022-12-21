@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Androidpruebatres"
         tools:targetApi="31">
         <activity
+            android:name=".recordatorios"
+            android:exported="false" />
+        <activity
             android:name=".registrarActividad"
             android:exported="false" />
         <activity

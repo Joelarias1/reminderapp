@@ -34,49 +34,56 @@ public class MainActivity extends AppCompatActivity {
         startActivity(registrarAct);
     }
 
-    private void obtenerRut(){
+
+
+    private void userValidado(){
         AdminBD DB = new AdminBD(MainActivity.this);
-        String rut, contrasena;
-        boolean found = false;
+        String rut, contra;
 
         rut = tilRut.getEditText().getText().toString();
+        contra = tilContra.getEditText().getText().toString();
 
-        String query = "SELECT * FROM USERS WHERE RUT = ?";
-        Cursor cursor = DB.getWritableDatabase().rawQuery(query, new String[]{rut});
+        if(rut.isEmpty() || contra.isEmpty()){
+            Toast.makeText(this, "Por favor rellena todos los campos", Toast.LENGTH_SHORT).show();
+        }else {
+            String query = "SELECT * FROM USERS WHERE RUT = ?";
+            Cursor cursor = DB.getWritableDatabase().rawQuery(query, new String[]{rut});
 
+            boolean contrasenaCorrecta = false;
 
+            if (cursor.moveToFirst()) {
+                do {
+                    @SuppressLint("Range") String rutFromDb = cursor.getString(cursor.getColumnIndex("RUT"));
+                    @SuppressLint("Range") String contrasenaFromDb = cursor.getString(cursor.getColumnIndex("CONTRASENA"));
+                    if (rut.equals(rutFromDb) && contra.equals(contrasenaFromDb)) {
+                        contrasenaCorrecta = true;
+                        break;
+                    }
 
-        if (cursor.moveToFirst()) {
-            do {
-                @SuppressLint("Range") String rutFromDb = cursor.getString(cursor.getColumnIndex("RUT"));
-                if (rut.equals(rutFromDb)) {
-                    found = true;
-                    break;
-                }
-            } while (cursor.moveToNext());
+                } while (cursor.moveToNext());
+            }
+
+            if (contrasenaCorrecta == true) {
+                // Iniciar sesión
+                Toast.makeText(this, "La contraseña es correcta", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, recordatorios.class);
+                intent.putExtra("RUT", rut);
+                intent.putExtra("CONTRASEÑA", contra);
+
+                startActivity(intent);
+
+            } else {
+                tilContra.setError("Contraseña incorrecta");
+            }
         }
-
-        if (found) {
-            // Se encontró un registro con el rut ingresado por el usuario
-
-            Toast.makeText(this, "usuario encontrado", Toast.LENGTH_SHORT).show();
-        } else {
-            // No se encontró ningún registro con el rut ingresado por el usuario
-
-            Toast.makeText(this, "Rut no existe, registrarse", Toast.LENGTH_SHORT).show();
-        }
-
     }
-
-
-
 
 
     private void eventos(){
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obtenerRut();
+                userValidado();
             }
         });
 

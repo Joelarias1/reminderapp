@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.Cursor;
+
 
 
 import androidx.annotation.Nullable;
@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 public class AdminBD extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 2;
-    private static final String DATABASE_NOMBRE = "BDD.db";
+    private static final String DATABASE_NOMBRE = "BDDD.db";
 
     public AdminBD(@Nullable Context context) {
         super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
@@ -36,8 +36,10 @@ public class AdminBD extends SQLiteOpenHelper {
 
         if(result==-1){
             return false;
+            //Esto significa que no lo pudo insertar
         }else {
             return true;
+            //Inserto el dato
         }
     }
 
