@@ -28,6 +28,30 @@ public class MainActivity extends AppCompatActivity {
         eventos();
     }
 
+    private void validaciones(){
+        String rut, contra;
+
+        rut = tilRut.getEditText().getText().toString();
+        contra = tilContra.getEditText().getText().toString();
+
+        if (rut.isEmpty() || contra.isEmpty()){
+            Toast.makeText(this, "Rellene todos los campos por favor", Toast.LENGTH_SHORT).show();
+        }else{
+            AdminBD DB = new AdminBD(MainActivity.this);
+            String query = "SELECT * FROM USERS WHERE RUT = ?";
+            Cursor cursor = DB.getWritableDatabase().rawQuery(query, new String[]{rut});
+
+            if (cursor.moveToFirst()) {
+                // El RUT existe
+                userValidado();
+            } else {
+                // El RUT no existe
+                Toast.makeText(this, "Rut no existe, registrarse", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
 
     private void userValidado(){
         AdminBD DB = new AdminBD(MainActivity.this);
@@ -36,40 +60,35 @@ public class MainActivity extends AppCompatActivity {
         rut = tilRut.getEditText().getText().toString();
         contra = tilContra.getEditText().getText().toString();
 
-        if(rut.isEmpty() || contra.isEmpty()){
-            Toast.makeText(this, "Por favor rellena todos los campos", Toast.LENGTH_SHORT).show();
-        }else {
-            String query = "SELECT * FROM USERS WHERE RUT = ?";
-            Cursor cursor = DB.getWritableDatabase().rawQuery(query, new String[]{rut});
+        String query = "SELECT * FROM USERS WHERE RUT = ?";
+        Cursor cursor = DB.getWritableDatabase().rawQuery(query, new String[]{rut});
 
-            boolean contrasenaCorrecta = false;
+        boolean contrasenaCorrecta = false;
 
-            if (cursor.moveToFirst()) {
-                do {
-                    @SuppressLint("Range") String rutFromDb = cursor.getString(cursor.getColumnIndex("RUT"));
-                    @SuppressLint("Range") String contrasenaFromDb = cursor.getString(cursor.getColumnIndex("CONTRASENA"));
-                    if (rut.equals(rutFromDb) && contra.equals(contrasenaFromDb)) {
-                        contrasenaCorrecta = true;
-                        break;
-                    }
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String rutFromDb = cursor.getString(cursor.getColumnIndex("RUT"));
+                @SuppressLint("Range") String contrasenaFromDb = cursor.getString(cursor.getColumnIndex("CONTRASENA"));
+                if (rut.equals(rutFromDb) && contra.equals(contrasenaFromDb)) {
+                    contrasenaCorrecta = true;
+                    break;
+                }
 
-                } while (cursor.moveToNext());
-            }
+            } while (cursor.moveToNext());
+        }
 
-            if (contrasenaCorrecta == true) {
-                // Iniciar sesión
-                Toast.makeText(this, "La contraseña es correcta", Toast.LENGTH_SHORT).show();
-                Intent actividadRecordatorio = new Intent(this, recordatorios.class);
+        if (contrasenaCorrecta == true) {
+            // Iniciar sesión
+            Toast.makeText(this, "La contraseña es correcta", Toast.LENGTH_SHORT).show();
+            Intent actividadRecordatorio = new Intent(this, recordatorios.class);
 
-                actividadRecordatorio.putExtra("RUT", rut);
-                actividadRecordatorio.putExtra("CONTRASENA", contra);
+            actividadRecordatorio.putExtra("RUT", rut);
+            actividadRecordatorio.putExtra("CONTRASENA", contra);
 
+            startActivity(actividadRecordatorio);
 
-                startActivity(actividadRecordatorio);
-
-            } else {
-                tilContra.setError("Contraseña incorrecta");
-            }
+        } else {
+            tilContra.setError("Contraseña incorrecta");
         }
     }
 
@@ -88,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userValidado();
+                validaciones();
             }
         });
 
