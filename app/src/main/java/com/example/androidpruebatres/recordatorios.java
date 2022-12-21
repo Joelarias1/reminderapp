@@ -16,15 +16,25 @@ public class recordatorios extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recordatorios);
+
+        referencias();
+        obtenerData();
+
+    }
+
+    private void obtenerData(){
         Intent actividadRecordatorio = getIntent();
 
         String rut = actividadRecordatorio.getStringExtra("RUT");
         String contrasena = actividadRecordatorio.getStringExtra("CONTRASENA");
 
-        Toast.makeText(this, "Rut:" + rut, Toast.LENGTH_SHORT).show();
+        tvRut.setText("Hola" + "" + rut);
 
     }
 
 
+    private void referencias(){
+        tvRut = findViewById(R.id.tvRut);
+    }
 
 }

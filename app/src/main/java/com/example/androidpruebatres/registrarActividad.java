@@ -27,8 +27,8 @@ public class registrarActividad extends AppCompatActivity {
 
     private void poblar(){
         AdminBD DB = new AdminBD(registrarActividad.this);
-        DB.crearUser("2000", "joel", "3234","234235");
-        DB.crearUser("2001240", "juan", "3453534","34235");
+        DB.crearUser("20680", "Joel", "123","123");
+        DB.crearUser("20690", "Test", "123","123");
     }
 
 
@@ -70,8 +70,6 @@ public class registrarActividad extends AppCompatActivity {
             }
         }
     }
-
-
 
 
 
