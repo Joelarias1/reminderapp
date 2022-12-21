@@ -3,11 +3,14 @@ package com.example.androidpruebatres;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.database.Cursor;
+
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -32,9 +35,7 @@ public class registrarActividad extends AppCompatActivity {
     private void poblar(){
         AdminBD DB = new AdminBD(registrarActividad.this);
         DB.crearUser("2000", "joel", "3234","234235");
-        DB.crearUser("2001240", "joel", "3234","234235");
-        DB.crearUser("2001230", "joel", "3234","234235");
-        DB.crearUser("20231200", "joel", "3234","234235");
+        DB.crearUser("2001240", "juan", "3453534","34235");
     }
 
 
@@ -47,12 +48,33 @@ public class registrarActividad extends AppCompatActivity {
         contrasena = tilContra.getEditText().getText().toString();
         token = tilToken.getEditText().getText().toString();
 
-        Boolean checkData = DB.crearUser(rut, nombre, contrasena, token);
+        if (nombre.isEmpty()){
+            tilNombre.setError("No puede dejar el campo vacío");
+        }
 
-        if (checkData== true){
-            Toast.makeText(this, "User creado exitosamente", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(this, "Fallido revisar datos", Toast.LENGTH_SHORT).show();
+        if (rut.isEmpty()){
+            tilRut.setError("No puede dejar el campo vacío");
+        }
+
+        if(contrasena.isEmpty()){
+            tilContra.setError("No puede dejar el campo vacío");
+        }
+
+        if(token.isEmpty()){
+            tilToken.setError("No puede dejar el campo vacío");
+        }
+
+        else{
+
+            Boolean checkData = DB.crearUser(rut, nombre, contrasena, token);
+            if (checkData== true){
+                Toast.makeText(this, "User creado exitosamente", Toast.LENGTH_SHORT).show();
+                Intent volverAct = new Intent(this, MainActivity.class);
+                startActivity(volverAct);
+
+            }else {
+                Toast.makeText(this, "Rut ya existe", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

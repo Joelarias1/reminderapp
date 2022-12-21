@@ -4,13 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
+import android.database.Cursor;
+
 
 import androidx.annotation.Nullable;
 
 public class AdminBD extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NOMBRE = "BDD.db";
 
     public AdminBD(@Nullable Context context) {
@@ -19,8 +20,7 @@ public class AdminBD extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table USERS(NOMBRE TEXT, RUT TEXT PRIMARY KEY, CONTRASENA TEXT, TOKEN TEXT)");
-
+        db.execSQL("create table USERS(NOMBRE TEXT NOT NULL, RUT TEXT PRIMARY KEY, CONTRASENA TEXT NOT NULL, TOKEN TEXT NOT NULL)");
     }
 
     public boolean crearUser(String RUT, String NOMBRE, String CONTRASENA, String TOKEN ){
@@ -38,9 +38,11 @@ public class AdminBD extends SQLiteOpenHelper {
             return false;
         }else {
             return true;
-
         }
     }
+
+
+
 
 
 
