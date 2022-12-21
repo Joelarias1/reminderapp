@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 public class AdminBD extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NOMBRE = "BDUser.db";
 
     public AdminBD(@Nullable Context context) {
@@ -50,7 +50,7 @@ public class AdminBD extends SQLiteOpenHelper {
 
     }
 
-    public boolean crearReminder(String RUT, String TITULO, String FECHA, String IMPORTANCIA, String OBSERVACION, String LUGAR){
+    public void crearReminder(String RUT, String TITULO, String FECHA, String IMPORTANCIA, String OBSERVACION, String LUGAR){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues data = new ContentValues();
 
@@ -64,13 +64,6 @@ public class AdminBD extends SQLiteOpenHelper {
         long result= db.insert("REMINDER", null, data);
         db.close();
 
-        if(result==-1){
-            return false;
-            //Esto significa que no lo pudo insertar
-        }else {
-            return true;
-            //Inserto el dato
-        }
     }
 
     @Override
