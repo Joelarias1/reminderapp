@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".recuperarpassActivity">
+    tools:context=".recuperarActividad">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilRutRecuperar"
@@ -45,19 +45,13 @@
         android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="@+id/tilTokenRecuperar"
         app:layout_constraintStart_toStartOf="@+id/tilTokenRecuperar"
-        app:layout_constraintTop_toBottomOf="@+id/tilTokenRecuperar">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nueva Contraseña:" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@+id/tilTokenRecuperar"/>
 
     <Button
-        android:id="@+id/btnNuevaPass"
+        android:id="@+id/btnRecuperarPass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="60dp"
         android:text="Recuperar"
         app:layout_constraintEnd_toEndOf="@+id/tilNuevaPass"
         app:layout_constraintStart_toStartOf="@+id/tilNuevaPass"
@@ -80,7 +74,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Volver"
-        app:layout_constraintEnd_toEndOf="@+id/btnNuevaPass"
-        app:layout_constraintStart_toStartOf="@+id/btnNuevaPass"
-        app:layout_constraintTop_toBottomOf="@+id/btnNuevaPass" />
+        app:layout_constraintEnd_toEndOf="@+id/btnRecuperarPass"
+        app:layout_constraintStart_toStartOf="@+id/btnRecuperarPass"
+        app:layout_constraintTop_toBottomOf="@+id/btnRecuperarPass" />
+
+    <TextView
+        android:id="@+id/tvMostrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contraseña: *****"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnRecuperarPass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tilTokenRecuperar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

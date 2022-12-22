@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void recuperarAct(){
-        Intent recuperarAct = new Intent(this, recuperarpassActivity.class);
-        startActivity(recuperarAct);
+        Intent irRecuperar = new Intent(this, recuperarActividad.class);
+        startActivity(irRecuperar);
     }
 
 

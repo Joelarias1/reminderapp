@@ -2,6 +2,7 @@ package com.example.androidpruebatres;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
@@ -59,6 +60,19 @@ public class AdminBD extends SQLiteOpenHelper {
 
         // Insertar la nueva fila en la tabla REMINDER
         db.insert("REMINDER", null, values);
+    }
+
+
+    public String getPasswordFromRut(String rut) {
+        SQLiteDatabase db = getReadableDatabase();
+        String password = "";
+
+        Cursor cursor = db.rawQuery("SELECT CONTRASENA FROM USERS WHERE rut = ?", new String[]{rut});
+        if (cursor.moveToFirst()) {
+            password = cursor.getString(0);
+        }
+        cursor.close();
+        return password;
     }
 
 
