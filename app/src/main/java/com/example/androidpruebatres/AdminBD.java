@@ -1,5 +1,6 @@
 package com.example.androidpruebatres;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,7 +13,7 @@ import androidx.annotation.Nullable;
 
 public class AdminBD extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NOMBRE = "BaseDatosAPP.db";
 
 
@@ -75,12 +76,33 @@ public class AdminBD extends SQLiteOpenHelper {
         return password;
     }
 
+    public void nuevaPass(String rut, String token, String nuevaContrasena) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String updateSql = "UPDATE " + "USERS" + " SET " + "CONTRASENA" + " = ? WHERE " + "RUT" + " = ? AND " + "TOKEN" + " = ?";
+        db.execSQL(updateSql, new String[] {nuevaContrasena, rut, token});
+    }
+
+
+    @SuppressLint("Range")
+    public String getTokenFromRut(String rut) {
+        String token = "";
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT token FROM users WHERE rut = ?", new String[]{rut});
+        if (cursor.moveToFirst()) {
+            token = cursor.getString(cursor.getColumnIndex("TOKEN"));
+        }
+        cursor.close();
+        return token;
+    }
+
+
+
 
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
-
 }

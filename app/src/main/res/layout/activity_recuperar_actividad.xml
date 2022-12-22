@@ -20,7 +20,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Rut:" />
+            android:hint="Rut:"
+            android:textColorHint="#616161" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -35,27 +36,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Token:" />
+            android:hint="Token:"
+            android:textColorHint="#616161" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilNuevaPass"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/tilTokenRecuperar"
-        app:layout_constraintStart_toStartOf="@+id/tilTokenRecuperar"
-        app:layout_constraintTop_toBottomOf="@+id/tilTokenRecuperar"/>
-
-    <Button
-        android:id="@+id/btnRecuperarPass"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="Recuperar"
-        app:layout_constraintEnd_toEndOf="@+id/tilNuevaPass"
-        app:layout_constraintStart_toStartOf="@+id/tilNuevaPass"
-        app:layout_constraintTop_toBottomOf="@+id/tilNuevaPass" />
 
     <TextView
         android:id="@+id/tvRecuperar"
@@ -70,20 +53,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnVolver"
+        android:id="@+id/btnRecuperarPass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Volver"
-        app:layout_constraintEnd_toEndOf="@+id/btnRecuperarPass"
-        app:layout_constraintStart_toStartOf="@+id/btnRecuperarPass"
-        app:layout_constraintTop_toBottomOf="@+id/btnRecuperarPass" />
+        android:layout_marginTop="100dp"
+        android:text="Recuperar"
+        app:layout_constraintEnd_toEndOf="@+id/tilTokenRecuperar"
+        app:layout_constraintStart_toStartOf="@+id/tilTokenRecuperar"
+        app:layout_constraintTop_toBottomOf="@+id/tilTokenRecuperar" />
 
     <TextView
-        android:id="@+id/tvMostrar"
+        android:id="@+id/tvMostrarPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Contraseña: *****"
-        android:textSize="16sp"
+        android:text="Contraseña: ******"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btnRecuperarPass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
