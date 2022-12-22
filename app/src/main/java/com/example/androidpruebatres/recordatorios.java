@@ -9,14 +9,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
 public class recordatorios extends AppCompatActivity {
     private TextView tvRut;
-    private Button btnCambiarPass, btnNuevoEvento;
+    private Button btnOpciones, btnNuevoEvento;
+    private ListView ltvEvents;
+
+    private String rutObtenido;
 
 
     @Override
@@ -47,12 +52,20 @@ public class recordatorios extends AppCompatActivity {
 
     }
 
-    private void crearEvento(){
+    private void crearEventoActividad(){
         Intent actividadRecordatorio = getIntent();
-
-        AdminBD DB = new AdminBD(recordatorios.this);
         String rut = actividadRecordatorio.getStringExtra("RUT");
-        DB.createReminder("Titulo del recordatorio", "2022-12-21", "Alta", "Observaciones del recordatorio", "Lugar del recordatorio", rut);
+
+        if (rut != null){
+            Intent creareventoAct = new Intent(this, creareventoActividad.class);
+            creareventoAct.putExtra("RUT",rut);
+            startActivity(creareventoAct);
+        }else{
+            Toast.makeText(this, " " +rut, Toast.LENGTH_SHORT).show();
+        }
+
+        //AdminBD DB = new AdminBD(recordatorios.this);
+        //DB.createReminder("Ejemplo del recordatorio", "2022-12-21", "Alta", "Observaciones del recordatorio", "Lugar del recordatorio", rut);
 
     }
 
@@ -60,7 +73,7 @@ public class recordatorios extends AppCompatActivity {
         btnNuevoEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                crearEvento();
+                crearEventoActividad();
             }
         });
     }
@@ -68,9 +81,8 @@ public class recordatorios extends AppCompatActivity {
     private void referencias(){
         tvRut = findViewById(R.id.tvRut);
 
-        btnCambiarPass = findViewById(R.id.btnNuevaPass);
+        btnOpciones = findViewById(R.id.btnOpciones);
         btnNuevoEvento = findViewById(R.id.btnNuevoEvento);
-
 
     }
 

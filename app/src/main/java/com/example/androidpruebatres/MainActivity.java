@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (contrasenaCorrecta == true) {
             // Iniciar sesión
-            Toast.makeText(this, "La contraseña es correcta", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "La contraseña es correcta", Toast.LENGTH_SHORT).show();
             Intent actividadRecordatorio = new Intent(this, recordatorios.class);
 
             actividadRecordatorio.putExtra("RUT", rut);

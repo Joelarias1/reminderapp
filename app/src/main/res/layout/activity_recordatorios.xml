@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ltvEventos"
+    android:id="@+id/recordatorios"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".recordatorios">
@@ -34,12 +34,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/btnCambiarPass"
+            android:id="@+id/btnOpciones"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="Cambiar Clave" />
+            android:text="Opciones" />
 
         <Button
             android:id="@+id/btnNuevoEvento"
@@ -50,5 +50,14 @@
             android:text="NUEVO EVENTO" />
 
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/ltvEventos"
+        android:layout_width="345dp"
+        android:layout_height="467dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
