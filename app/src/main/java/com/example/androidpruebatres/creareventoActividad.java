@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class creareventoActividad extends AppCompatActivity {
-    private Button btnAgregar;
+    private Button btnAgregar, btnAtras;
     private TextInputLayout tilTitulo, tilObs, tilFecha, tilLugar;
     private Spinner spnImportancia;
 
@@ -44,7 +44,6 @@ public class creareventoActividad extends AppCompatActivity {
 
         spnImportancia.setAdapter(adapter);
         spnImportancia.setSelection(0);
-
     }
 
 
@@ -64,8 +63,14 @@ public class creareventoActividad extends AppCompatActivity {
         }else {
             AdminBD DB = new AdminBD(creareventoActividad.this);
             DB.createReminder(TITULO,FECHA,IMPORTANCIA, OBSERVACION, LUGAR, rut);
+            DB.close();
             Toast.makeText(this, "Tarea creada" , Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void volver(){
+        Intent volverMenu = new Intent(this, recordatorios.class);
+        startActivity(volverMenu);
     }
 
 
@@ -77,6 +82,12 @@ public class creareventoActividad extends AppCompatActivity {
                 agregarEvento();
             }
         });
+        btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                volver();
+            }
+        });
 
 
     }
@@ -84,6 +95,7 @@ public class creareventoActividad extends AppCompatActivity {
 
     private void referencias(){
         btnAgregar = findViewById(R.id.btnAgregar);
+        btnAtras = findViewById(R.id.btnAtras);
 
         tilFecha = findViewById(R.id.tilFecha);
         tilLugar = findViewById(R.id.tilLugar);

@@ -106,10 +106,20 @@
         android:id="@+id/btnAgregar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="196dp"
+        android:layout_marginTop="156dp"
         android:text="Agregar"
         app:layout_constraintEnd_toEndOf="@+id/spnImportancia"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/spnImportancia"
         app:layout_constraintTop_toBottomOf="@+id/spnImportancia" />
+
+    <Button
+        android:id="@+id/btnAtras"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Volver"
+        app:layout_constraintEnd_toEndOf="@+id/btnAgregar"
+        app:layout_constraintStart_toStartOf="@+id/btnAgregar"
+        app:layout_constraintTop_toBottomOf="@+id/btnAgregar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,8 +21,6 @@ public class recordatorios extends AppCompatActivity {
     private Button btnOpciones, btnNuevoEvento;
     private ListView ltvEvents;
 
-    private String rutObtenido;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +46,7 @@ public class recordatorios extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             @SuppressLint("Range") String nombre = cursor.getString(cursor.getColumnIndex("NOMBRE"));
             tvRut.setText("Bienvenido" + " " + nombre);
+            DB.close();
         }
 
     }
