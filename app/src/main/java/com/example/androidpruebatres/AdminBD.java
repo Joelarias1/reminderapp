@@ -4,28 +4,26 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
+import android.provider.BaseColumns;
 
 
 import androidx.annotation.Nullable;
 
 public class AdminBD extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 7;
-    private static final String DATABASE_NOMBRE = "BDUser.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NOMBRE = "BaseDatosAPP.db";
+
 
     public AdminBD(@Nullable Context context) {
         super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String queryUsers = "CREATE TABLE USERS (RUT TEXT PRIMARY KEY, NOMBRE TEXT, CONTRASENA TEXT, TOKEN TEXT)";
-        String queryReminder = "CREATE TABLE REMINDER (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITULO TEXT, FECHA TEXT, IMPORTANCIA TEXT, OBSERVACION TEXT, LUGAR TEXT, FOREIGN KEY(RUT) REFERENCES USERS(RUT))";
-
-        db.execSQL(queryUsers);
-        db.execSQL(queryReminder);
-
+        db.execSQL("CREATE TABLE USERS (RUT TEXT PRIMARY KEY, NOMBRE TEXT, CONTRASENA TEXT, TOKEN TEXT)");
+        db.execSQL("CREATE TABLE REMINDER (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITULO TEXT, FECHA TEXT, IMPORTANCIA TEXT, OBSERVACION TEXT, LUGAR TEXT, RUT TEXT, FOREIGN KEY(RUT) REFERENCES USERS(RUT))");
     }
+
 
     public boolean crearUser(String RUT, String NOMBRE, String CONTRASENA, String TOKEN ){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -45,26 +43,25 @@ public class AdminBD extends SQLiteOpenHelper {
         }else {
             return true;
             //Inserto el dato
-
         }
-
     }
 
-    public void crearReminder(String RUT, String TITULO, String FECHA, String IMPORTANCIA, String OBSERVACION, String LUGAR){
+    public void createReminder(String TITULO, String FECHA, String IMPORTANCIA, String OBSERVACION, String LUGAR, String RUT) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues data = new ContentValues();
 
-        data.put("RUT", RUT);
-        data.put("TITULO", TITULO);
-        data.put("FECHA", FECHA);
-        data.put("IMPORTANCIA", IMPORTANCIA);
-        data.put("OBSERVACION", OBSERVACION);
-        data.put("LUGAR", LUGAR);
+        ContentValues values = new ContentValues();
+        values.put("TITULO", TITULO);
+        values.put("FECHA", FECHA);
+        values.put("IMPORTANCIA", IMPORTANCIA);
+        values.put("OBSERVACION", OBSERVACION);
+        values.put("LUGAR", LUGAR);
+        values.put("RUT", RUT);
 
-        long result= db.insert("REMINDER", null, data);
-        db.close();
-
+        // Insertar la nueva fila en la tabla REMINDER
+        db.insert("REMINDER", null, values);
     }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
