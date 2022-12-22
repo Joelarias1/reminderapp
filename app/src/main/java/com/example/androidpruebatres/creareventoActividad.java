@@ -21,7 +21,8 @@ public class creareventoActividad extends AppCompatActivity {
     private Spinner spnImportancia;
 
     //ArrayList
-    ArrayList<String> opciones = new ArrayList<>();
+    private ArrayList<String> opciones = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
 
 
     @Override
@@ -31,14 +32,18 @@ public class creareventoActividad extends AppCompatActivity {
 
         referencias();
         eventos();
-        poblarOpciones();
+        spinnerOpciones();
 
     }
 
-    private void poblarOpciones(){
+    private void spinnerOpciones(){
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones);
         opciones.add("Normal");
         opciones.add("Importante");
         opciones.add("Muy importante");
+
+        spnImportancia.setAdapter(adapter);
+        spnImportancia.setSelection(0);
 
     }
 
@@ -52,13 +57,15 @@ public class creareventoActividad extends AppCompatActivity {
         FECHA = tilFecha.getEditText().getText().toString();
         OBSERVACION = tilObs.getEditText().getText().toString();
         LUGAR = tilLugar.getEditText().getText().toString();
-        //IMPORTANCIA = spnImportancia.getSelectedItem().toString();
+        IMPORTANCIA = spnImportancia.getSelectedItem().toString();
 
-
-        AdminBD DB = new AdminBD(creareventoActividad.this);
-        DB.createReminder(TITULO,FECHA,"Normal", OBSERVACION, LUGAR, rut);
-        Toast.makeText(this, " " +rut, Toast.LENGTH_SHORT).show();
-
+        if (TITULO.isEmpty() || FECHA.isEmpty() || OBSERVACION.isEmpty() || LUGAR.isEmpty()){
+            Toast.makeText(this, "Rellenar todos los campos" , Toast.LENGTH_SHORT).show();
+        }else {
+            AdminBD DB = new AdminBD(creareventoActividad.this);
+            DB.createReminder(TITULO,FECHA,IMPORTANCIA, OBSERVACION, LUGAR, rut);
+            Toast.makeText(this, "Tarea creada" , Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -85,9 +92,6 @@ public class creareventoActividad extends AppCompatActivity {
 
         //Spinner
         spnImportancia = findViewById(R.id.spnImportancia);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, opciones);
-        spnImportancia.setAdapter(adapter);
-
 
     }
 
