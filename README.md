@@ -1,4 +1,4 @@
-# evaluacionTres
+# Aplicación de Recordatorios
 Prueba 3 Aplicaciones Moviles. Login con validaciones, registro de usuarios, creación de eventos fechas. Opciones de recuperar pass, cambiar pass y eliminar usuario.
 
 Login -> Valida al usuario mediante el RUT si existe o no en la base de datos SQLite
