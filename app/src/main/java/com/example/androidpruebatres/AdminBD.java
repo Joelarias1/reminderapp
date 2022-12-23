@@ -92,13 +92,14 @@ public class AdminBD extends SQLiteOpenHelper {
         return token;
     }
 
+    public void cambiarContrasena(String rut, String contrasenaActual, String nuevaContrasena) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String updateSql = "UPDATE " + "USERS" + " SET " + "CONTRASENA" + " = ? WHERE " + "RUT" + " = ? AND " + "CONTRASENA" + " = ?";
+        db.execSQL(updateSql, new String[] {nuevaContrasena, rut, contrasenaActual});
+        db.close();
+    }
 
 
-
-
-
-
-    //No me funciono:
     @SuppressLint("Range")
     public String getNameFromRut(String rut) {
         SQLiteDatabase db = this.getReadableDatabase();

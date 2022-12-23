@@ -25,20 +25,60 @@ public class opcionesActividad extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opciones_actividad);
 
-        eventos();
         referencias();
-        mostrarDatos();
+        mostrarRut();
+        mostrarNombre();
+        eventos();
     }
 
 
 
-    private void mostrarDatos(){
+    private void mostrarRut(){
         Intent opcionesAct = getIntent();
         String rut = opcionesAct.getStringExtra("RUT");
         tvMostrarRut.setText("Rut de Usuario:" + " " + rut);
     }
 
-    private void eventos(){
+    private void mostrarNombre(){
+        AdminBD DB = new AdminBD(opcionesActividad.this);
+
+        Intent opcionesAct = getIntent();
+        String rut = opcionesAct.getStringExtra("RUT");
+        String nombreObt = DB.getNameFromRut(rut);
+
+        tvMostrarNombre.setText("Nombre de usuario:" + " " + nombreObt);
+    }
+
+    private void cambiarPass(){
+        AdminBD DB = new AdminBD(opcionesActividad.this);
+
+        Intent opcionesAct = getIntent();
+        String rut = opcionesAct.getStringExtra("RUT");
+
+        String contraObtenida = DB.getPasswordFromRut(rut);
+        String contraActual = tilPassActual.getEditText().getText().toString();
+        String contraNueva = tilPassNueva.getEditText().getText().toString();
+
+        if (!contraActual.equals(contraObtenida)) {
+            Toast.makeText(this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
+        } else {
+            if (contraObtenida.equals(contraNueva)) {
+                Toast.makeText(this, "No puede ser la misma contraseña", Toast.LENGTH_SHORT).show();
+            } else {
+                DB.cambiarContrasena(rut, contraActual, contraNueva);
+                Toast.makeText(this, "Contraseña actualizada", Toast.LENGTH_SHORT).show();
+                DB.close();
+            }
+        }
+    }
+
+    private void eventos (){
+        btnCambiarPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cambiarPass();
+            }
+        });
     }
 
 
@@ -50,6 +90,7 @@ public class opcionesActividad extends AppCompatActivity {
         tilPassNueva = findViewById(R.id.tilNuevaPass);
 
         tvMostrarRut = findViewById(R.id.tvMostrarRut);
+        tvMostrarNombre = findViewById(R.id.tvMostrarNombre);
     }
 
 }
