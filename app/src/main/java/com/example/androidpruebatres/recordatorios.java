@@ -14,12 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class recordatorios extends AppCompatActivity {
     private TextView tvRut;
     private Button btnOpciones, btnNuevoEvento;
     private ListView ltvEvents;
+
+    private ArrayAdapter<Reminder> adaptadorReminders;
+
 
 
     @Override
@@ -30,6 +34,7 @@ public class recordatorios extends AppCompatActivity {
         referencias();
         eventos();
         obtenerData();
+        mostrarReminder();
 
     }
 
@@ -66,6 +71,32 @@ public class recordatorios extends AppCompatActivity {
 
     }
 
+    private void mostrarReminder(){
+        Intent actividadRecordatorio = getIntent();
+        String rut = actividadRecordatorio.getStringExtra("RUT");
+        AdminBD db = new AdminBD(recordatorios.this);
+
+        // Obtener la lista actualizada de recordatorios
+        List<Reminder> listaReminders = db.getAllReminders(rut);
+
+        // Crear un nuevo ArrayList con los títulos de los recordatorios
+        ArrayList<String> listaTitulos = new ArrayList<>();
+        for (Reminder reminder : listaReminders) {
+            listaTitulos.add(reminder.getTitulo());
+        }
+
+        // Crear un nuevo ArrayAdapter con la lista actualizada de recordatorios
+        ArrayAdapter<String> adaptadorEventos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaTitulos);
+
+        // Asignar el nuevo ArrayAdapter al ListView
+        ltvEvents.setAdapter(adaptadorEventos);
+        adaptadorEventos.notifyDataSetChanged();
+        db.close();
+    }
+
+
+
+
     private void irOpciones(){
         Intent actividadRecordatorio = getIntent();
         String rut = actividadRecordatorio.getStringExtra("RUT");
@@ -78,7 +109,6 @@ public class recordatorios extends AppCompatActivity {
             Toast.makeText(this, "Error" +rut, Toast.LENGTH_SHORT).show();
             //Testing de RUT null por putExtra
         }
-
 
     }
 
@@ -104,5 +134,9 @@ public class recordatorios extends AppCompatActivity {
 
         btnOpciones = findViewById(R.id.btnOpciones);
         btnNuevoEvento = findViewById(R.id.btnNuevoEvento);
+
+        ltvEvents = findViewById(R.id.ltvEventos);
+        ltvEvents.setAdapter(adaptadorReminders);
+
     }
 }

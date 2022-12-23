@@ -11,14 +11,21 @@ import android.provider.BaseColumns;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AdminBD extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NOMBRE = "BaseDatosAPP.db";
+    private List<Reminder> listaReminders;
+
+
 
 
     public AdminBD(@Nullable Context context) {
         super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
+        listaReminders = new ArrayList<>();
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -61,6 +68,8 @@ public class AdminBD extends SQLiteOpenHelper {
 
         // Insertar la nueva fila en la tabla REMINDER
         db.insert("REMINDER", null, values);
+        listaReminders = getAllReminders(RUT);
+
     }
 
 
@@ -123,7 +132,45 @@ public class AdminBD extends SQLiteOpenHelper {
         String[] selectionArgs = { rut };
 
         db.delete("USERS", selection, selectionArgs);
+        listaReminders = getAllReminders(rut);
         db.close();
+    }
+
+    public List<Reminder> getAllReminders(String rut) {
+        List<Reminder> listaReminders = new ArrayList<>();
+
+        // Abre la base de datos en modo lectura
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Define la consulta a realizar para obtener los eventos
+        String query = "SELECT * FROM " + "REMINDER" + " WHERE " + "RUT" + " = ?";
+
+        // Ejecuta la consulta y almacena el resultado en un cursor
+        Cursor cursor = db.rawQuery(query, new String[] {rut});
+
+        // Recorre el cursor y crea un evento para cada fila del resultado
+        if (cursor.moveToFirst()) {
+            do {
+                Reminder reminder = new Reminder();
+                reminder.setId(cursor.getInt(0));
+                reminder.setTitulo(cursor.getString(1));
+                reminder.setFecha(cursor.getString(2));
+                reminder.setImportancia(cursor.getString(3));
+                reminder.setObservacion(cursor.getString(4));
+                reminder.setLugar(cursor.getString(5));
+                reminder.setRut(cursor.getString(6));
+
+                // Agrega el evento a la lista
+                listaReminders.add(reminder);
+            } while (cursor.moveToNext());
+        }
+
+        // Cierra el cursor y la base de datos
+        cursor.close();
+        db.close();
+
+        // Devuelve la lista de eventos
+        return listaReminders;
     }
 
 
