@@ -16,10 +16,9 @@ import java.util.List;
 
 public class AdminBD extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NOMBRE = "BaseDatosAPP.db";
     private List<Reminder> listaReminders;
-
 
 
 

@@ -27,8 +27,9 @@ public class registrarActividad extends AppCompatActivity {
 
     private void poblar(){
         AdminBD DB = new AdminBD(registrarActividad.this);
-        DB.crearUser("20680", "Joel", "123","123");
-        DB.crearUser("20690", "Test", "123","123");
+        DB.crearUser("111", "Testing", "123","123");
+        DB.createReminder("Titulo","20","Muy Importante", "No se", "No se ", "111");
+
     }
 
 

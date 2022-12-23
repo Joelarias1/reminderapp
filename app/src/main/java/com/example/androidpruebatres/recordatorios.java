@@ -89,8 +89,8 @@ public class recordatorios extends AppCompatActivity {
         ArrayAdapter<String> adaptadorEventos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaTitulos);
 
         // Asignar el nuevo ArrayAdapter al ListView
-        ltvEvents.setAdapter(adaptadorEventos);
         adaptadorEventos.notifyDataSetChanged();
+        ltvEvents.setAdapter(adaptadorEventos);
         db.close();
     }
 
