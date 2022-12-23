@@ -27,11 +27,16 @@ public class opcionesActividad extends AppCompatActivity {
 
         eventos();
         referencias();
+        mostrarDatos();
     }
 
 
 
-
+    private void mostrarDatos(){
+        Intent opcionesAct = getIntent();
+        String rut = opcionesAct.getStringExtra("RUT");
+        tvMostrarRut.setText("Rut de Usuario:" + " " + rut);
+    }
 
     private void eventos(){
     }
@@ -43,6 +48,8 @@ public class opcionesActividad extends AppCompatActivity {
 
         tilPassActual = findViewById(R.id.tilPassActual);
         tilPassNueva = findViewById(R.id.tilNuevaPass);
+
+        tvMostrarRut = findViewById(R.id.tvMostrarRut);
     }
 
 }

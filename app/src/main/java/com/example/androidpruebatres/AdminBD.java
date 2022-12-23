@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 
 public class AdminBD extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NOMBRE = "BaseDatosAPP.db";
 
 
@@ -73,17 +73,8 @@ public class AdminBD extends SQLiteOpenHelper {
             password = cursor.getString(0);
         }
         cursor.close();
+        db.close();
         return password;
-    }
-
-    public void actualizarContrasena(String rut, String contrasenaActual, String nuevaContrasena) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        // Crea una consulta de actualización que cambie la contraseña del usuario con el RUT proporcionado
-        String updateSql = "UPDATE " + "USERS" + " SET " + "CONTRASENA" + " = ? WHERE " + "RUT" + " = ? AND " + "CONTRASENA" + " = ?";
-        String[] selectionArgs = {nuevaContrasena, rut, contrasenaActual};
-
-        db.execSQL(updateSql, selectionArgs);
     }
 
 
@@ -97,12 +88,31 @@ public class AdminBD extends SQLiteOpenHelper {
             token = cursor.getString(cursor.getColumnIndex("TOKEN"));
         }
         cursor.close();
+        db.close();
         return token;
     }
 
 
 
 
+
+
+
+    //No me funciono:
+    @SuppressLint("Range")
+    public String getNameFromRut(String rut) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + "NOMBRE" + " FROM " + "USERS" + " WHERE " + "RUT" + " = '" + rut + "'";
+        Cursor cursor = db.rawQuery(query, null);
+
+        String name = "";
+        if (cursor.moveToNext()) {
+            name = cursor.getString(cursor.getColumnIndex("NOMBRE"));
+        }
+        cursor.close();
+        db.close();
+        return name;
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
