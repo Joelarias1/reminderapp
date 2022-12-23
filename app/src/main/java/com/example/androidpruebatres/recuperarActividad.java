@@ -57,15 +57,12 @@ public class recuperarActividad extends AppCompatActivity {
         });
     }
 
-
-
     private void referencias(){
         tilRut = findViewById(R.id.tilRutRecuperar);
         tilToken = findViewById(R.id.tilTokenRecuperar);
 
         tvMostrarPass = findViewById(R.id.tvMostrarPass);
         btnRecuperarpass = findViewById(R.id.btnRecuperarPass);
-
     }
 
 }

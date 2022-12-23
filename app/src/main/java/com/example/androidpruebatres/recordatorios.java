@@ -60,11 +60,25 @@ public class recordatorios extends AppCompatActivity {
             creareventoAct.putExtra("RUT",rut);
             startActivity(creareventoAct);
         }else{
-            Toast.makeText(this, " " +rut, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error" +rut, Toast.LENGTH_SHORT).show();
+            //Testing de RUT null por putExtra
         }
 
-        //AdminBD DB = new AdminBD(recordatorios.this);
-        //DB.createReminder("Ejemplo del recordatorio", "2022-12-21", "Alta", "Observaciones del recordatorio", "Lugar del recordatorio", rut);
+    }
+
+    private void irOpciones(){
+        Intent actividadRecordatorio = getIntent();
+        String rut = actividadRecordatorio.getStringExtra("RUT");
+
+        if (rut != null){
+            Intent opcionesAct = new Intent(this, opcionesActividad.class);
+            opcionesAct.putExtra("RUT",rut);
+            startActivity(opcionesAct);
+        }else{
+            Toast.makeText(this, "Error" +rut, Toast.LENGTH_SHORT).show();
+            //Testing de RUT null por putExtra
+        }
+
 
     }
 
@@ -75,6 +89,14 @@ public class recordatorios extends AppCompatActivity {
                 crearEventoActividad();
             }
         });
+
+        btnOpciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                irOpciones();
+            }
+        });
+
     }
 
     private void referencias(){
@@ -82,7 +104,5 @@ public class recordatorios extends AppCompatActivity {
 
         btnOpciones = findViewById(R.id.btnOpciones);
         btnNuevoEvento = findViewById(R.id.btnNuevoEvento);
-
     }
-
 }

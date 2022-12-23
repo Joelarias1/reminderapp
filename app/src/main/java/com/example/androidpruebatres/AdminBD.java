@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 
 public class AdminBD extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NOMBRE = "BaseDatosAPP.db";
 
 
@@ -65,7 +65,7 @@ public class AdminBD extends SQLiteOpenHelper {
 
 
     public String getPasswordFromRut(String rut) {
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         String password = "";
 
         Cursor cursor = db.rawQuery("SELECT CONTRASENA FROM USERS WHERE rut = ?", new String[]{rut});
@@ -76,18 +76,21 @@ public class AdminBD extends SQLiteOpenHelper {
         return password;
     }
 
-    public void nuevaPass(String rut, String token, String nuevaContrasena) {
-        SQLiteDatabase db = getReadableDatabase();
+    public void actualizarContrasena(String rut, String contrasenaActual, String nuevaContrasena) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
-        String updateSql = "UPDATE " + "USERS" + " SET " + "CONTRASENA" + " = ? WHERE " + "RUT" + " = ? AND " + "TOKEN" + " = ?";
-        db.execSQL(updateSql, new String[] {nuevaContrasena, rut, token});
+        // Crea una consulta de actualización que cambie la contraseña del usuario con el RUT proporcionado
+        String updateSql = "UPDATE " + "USERS" + " SET " + "CONTRASENA" + " = ? WHERE " + "RUT" + " = ? AND " + "CONTRASENA" + " = ?";
+        String[] selectionArgs = {nuevaContrasena, rut, contrasenaActual};
+
+        db.execSQL(updateSql, selectionArgs);
     }
 
 
     @SuppressLint("Range")
     public String getTokenFromRut(String rut) {
         String token = "";
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT token FROM users WHERE rut = ?", new String[]{rut});
         if (cursor.moveToFirst()) {
