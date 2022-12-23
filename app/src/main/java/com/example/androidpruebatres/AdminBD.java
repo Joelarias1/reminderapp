@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 
 public class AdminBD extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NOMBRE = "BaseDatosAPP.db";
 
 
@@ -23,7 +23,7 @@ public class AdminBD extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE USERS (RUT TEXT PRIMARY KEY, NOMBRE TEXT, CONTRASENA TEXT, TOKEN TEXT)");
-        db.execSQL("CREATE TABLE REMINDER (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITULO TEXT, FECHA TEXT, IMPORTANCIA TEXT, OBSERVACION TEXT, LUGAR TEXT, RUT TEXT, FOREIGN KEY(RUT) REFERENCES USERS(RUT))");
+        db.execSQL("CREATE TABLE REMINDER (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITULO TEXT, FECHA TEXT, IMPORTANCIA TEXT, OBSERVACION TEXT, LUGAR TEXT, RUT TEXT, FOREIGN KEY(RUT) REFERENCES USERS(RUT) ON DELETE CASCADE)");
     }
 
 
@@ -114,6 +114,18 @@ public class AdminBD extends SQLiteOpenHelper {
         db.close();
         return name;
     }
+
+
+    public void deleteUser(String rut) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = "RUT = ?";
+        String[] selectionArgs = { rut };
+
+        db.delete("USERS", selection, selectionArgs);
+        db.close();
+    }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

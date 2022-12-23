@@ -3,6 +3,8 @@ package com.example.androidpruebatres;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -72,11 +74,49 @@ public class opcionesActividad extends AppCompatActivity {
         }
     }
 
+    private void eliminarUser(){
+        Intent opcionesAct = getIntent();
+        String rut = opcionesAct.getStringExtra("RUT");
+
+        new AlertDialog.Builder(this)
+                .setTitle("Eliminar mi usuario")
+                .setMessage("¿Quieres borrar TU usuario?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AdminBD DB = new AdminBD(opcionesActividad.this);
+                        DB.deleteUser(rut);
+                        DB.close();
+                        volverInicio();
+
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+    }
+
+    private void volverInicio(){
+        Intent volverInicio = new Intent(this, MainActivity.class);
+        startActivity(volverInicio);
+    }
+
+
     private void eventos (){
         btnCambiarPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cambiarPass();
+            }
+        });
+        btnEliminarUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eliminarUser();
             }
         });
     }
